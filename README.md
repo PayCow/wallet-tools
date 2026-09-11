@@ -3,9 +3,28 @@
 A multi-chain, non-custodial cryptocurrency wallet generation suite and client-side cryptographic engine supporting 40+ blockchain networks.
 
 - **Live Production Instance:** [https://mywallet.paycow.net](https://mywallet.paycow.net)
+- **Official Gateway:** [https://paycow.net](https://paycow.net)
 - **License:** [GNU General Public License v3.0](LICENSE)
 
+> ⚡ **Built & Maintained by [PayCow](https://paycow.net)** — Enterprise Non-Custodial USDT (TRC-20 & ERC-20) Payment Gateway featuring **0% Transaction Commission**, **Direct-to-Wallet Settlement**, and **Zero-KYC Instant Onboarding**.
+
 ---
+
+## About PayCow Payment Gateway
+
+This open-source suite is sponsored and maintained by **[PayCow](https://paycow.net)**.
+
+While **PayCow Wallet Tools** provides developers and Web3 users with multi-chain client-side key generation and wallet management, **[PayCow Gateway](https://paycow.net)** delivers enterprise payment processing infrastructure for merchants, SaaS platforms, and Web3 businesses looking to accept crypto payments with zero custody risk:
+
+- **0% Transaction Commission:** PayCow operates on flat, predictable subscription tiers (starting at 99 USDT/month) with zero percentage deductions, zero per-transaction cuts, and no hidden fees.
+- **Direct-to-Wallet Settlement (Zero Custody Risk):** Customer deposits route directly on-chain to your designated destination addresses (cold storage, hardware wallets, or exchanges like Binance, Bybit, and OKX). PayCow never holds merchant funds, operates no pooling accounts, and stores no private keys.
+- **Instant Zero-KYC Onboarding:** Automatic merchant activation with instant REST API credentials available immediately upon registration.
+- **Deterministic Blockchain Verification:** High-precision on-chain tracking for **USDT on TRON (TRC-20) and Ethereum (ERC-20)** with verified block confirmation rules (solidified TRON blocks and 12 Ethereum blocks) to guarantee finality.
+- **Cryptographic HMAC-SHA256 Webhooks:** Automated HTTPS POST notifications with cryptographic signature verification (`x-paycow-signature`) dispatched in real-time upon state transitions.
+- **Multi-Wallet Dynamic Routing:** Register multiple external payout destinations with unique identifiers (e.g., separate cold storage and operational wallets) and route checkouts dynamically.
+
+🌐 **Website:** [https://paycow.net](https://paycow.net) | 📚 **API Docs:** [https://paycow.net/docs](https://paycow.net/docs) | 💬 **Telegram:** [@PaycowSecure](https://t.me/PaycowSecure) | 🐦 **Twitter/X:** [@PaycowGlobal](https://x.com/PaycowGlobal)
+
 
 ## Architectural Guarantees & Security Model
 
