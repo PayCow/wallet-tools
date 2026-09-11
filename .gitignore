@@ -153,8 +153,7 @@ jwt_secret.key
 data/
 
 # Dumps & local exports
-codebase_plain_text.txt
-all_code_labeled.txt
+*.txt
 dump_codebase.js
 
 # Bundled / compiled client files
