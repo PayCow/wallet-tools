@@ -1,0 +1,44 @@
+{
+  "name": "paycow-wallet-tools",
+  "version": "1.0.0",
+  "description": "Multi-chain non-custodial wallet generation suite and client-side cryptographic engine supporting 40+ blockchain networks.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build:crypto": "npx -y esbuild src/clientEntry.js --bundle --platform=browser --format=iife --global-name=PayCowCryptoLib --outfile=public/js/clientCrypto.js",
+    "build:qr": "npx -y esbuild src/qrEntry.js --bundle --platform=browser --format=iife --outfile=public/js/clientQr.js",
+    "build": "npm run build:crypto && npm run build:qr",
+    "test": "node test_suite.js && node test_wallet_import.js && node test_signing_verification.js && node test_negative_cases.js && node test_security_audit.js"
+  },
+  "keywords": [
+    "crypto",
+    "wallet-generator",
+    "bip39",
+    "evm",
+    "bitcoin",
+    "solana",
+    "cosmos",
+    "substrate",
+    "non-custodial"
+  ],
+  "author": "PayCow",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "bech32": "^2.0.0",
+    "better-sqlite3": "^11.10.0",
+    "bip39": "^3.1.0",
+    "blakejs": "^1.2.1",
+    "bs58": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "ed25519-hd-key": "^2.0.0",
+    "ethers": "^6.17.0",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "qrcode": "^1.5.4",
+    "tweetnacl": "^1.0.3"
+  }
+}

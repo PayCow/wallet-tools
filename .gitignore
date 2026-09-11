@@ -141,3 +141,22 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Security & sensitive keys
+*.key
+jwt_secret.key
+
+# Databases & local state
+*.db
+*.db-shm
+*.db-wal
+data/
+
+# Dumps & local exports
+codebase_plain_text.txt
+all_code_labeled.txt
+dump_codebase.js
+
+# Bundled / compiled client files
+public/js/clientCrypto.js
+public/js/clientQr.js

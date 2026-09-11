@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayCow Wallet Studio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div id="auth-gate-view" class="auth-gate-wrapper">
+    <div class="auth-gate-card">
+      <div class="auth-brand-logo">
+        <span>PayCow</span>
+        <span class="logo-badge">WALLET TOOLS</span>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+        Sign in or create an account to access the wallet studio.
+      </p>
+
+      <div class="auth-tab-switch">
+        <button class="auth-tab-btn active" id="btn-gate-tab-login">Sign In</button>
+        <button class="auth-tab-btn" id="btn-gate-tab-register">Create Account</button>
+      </div>
+
+      <form id="gate-form-login">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Username or Email</label>
+          <input type="text" class="form-input" id="gate-login-username" required placeholder="username or email">
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="gate-login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-pill-dark" style="width: 100%; justify-content: center; padding: 14px; font-size: 1rem;">
+          Sign In <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <form id="gate-form-register" style="display: none;">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" id="gate-reg-username" required placeholder="choose username">
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="gate-reg-email" required placeholder="name@domain.com">
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label">Password (Min 8 characters)</label>
+          <input type="password" class="form-input" id="gate-reg-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-pill-blue" style="width: 100%; justify-content: center; padding: 14px; font-size: 1rem;">
+          Create Account <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="dashboard-view" class="dashboard-wrapper" style="display: none;">
+    <div class="dashboard-layout">
+      
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-weight: 800; font-size: 1.15rem; color: var(--text-dark);">PayCow</div>
+            <span class="logo-badge">WALLET TOOLS</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section-title">MAIN</div>
+        <ul class="sidebar-nav">
+          <li><a class="sidebar-item active" data-tab="tab-overview"><i class="fa-solid fa-table-cells-large"></i> Overview</a></li>
+          <li><a class="sidebar-item" data-tab="tab-generator"><i class="fa-solid fa-wand-magic-sparkles"></i> Generator Studio</a></li>
+          <li><a class="sidebar-item" data-tab="tab-bulk"><i class="fa-solid fa-layer-group"></i> Bulk Generator</a></li>
+          <li><a class="sidebar-item" data-tab="tab-master-seed"><i class="fa-solid fa-key"></i> Master Seed</a></li>
+        </ul>
+
+        <div class="sidebar-section-title">WALLET & TOOLS</div>
+        <ul class="sidebar-nav">
+          <li><a class="sidebar-item" data-tab="tab-saved-wallets"><i class="fa-solid fa-vault"></i> Saved Addresses</a></li>
+          <li><a class="sidebar-item" data-tab="tab-source-code"><i class="fa-solid fa-folder-tree"></i> Open Source Explorer</a></li>
+        </ul>
+
+        <div class="sidebar-section-title">LEGAL & POLICIES</div>
+        <ul class="sidebar-nav">
+          <li><a class="sidebar-item" data-tab="tab-legal-risk"><i class="fa-solid fa-scale-balanced"></i> Legal & Risk Disclosure</a></li>
+        </ul>
+
+        <div class="sidebar-section-title">SETTINGS</div>
+        <ul class="sidebar-nav">
+          <li><a class="sidebar-item" data-tab="tab-account"><i class="fa-solid fa-user-gear"></i> Account Settings</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+          <button class="btn-sidebar-logout" id="btn-sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </aside>
+
+      <section class="dashboard-main">
+
+        <div id="tab-overview" class="dash-tab-content">
+          <div class="overview-grid">
+            <div class="stat-card">
+              <div>
+                <div class="stat-card-header">
+                  <span class="stat-label">SESSION STATUS</span>
+                  <span class="badge-live-blue"><i class="fa-solid fa-circle-dot" style="font-size: 0.6rem;"></i> In-Browser Crypto</span>
+                </div>
+                <div class="stat-value" id="overview-saved-count">0 <span style="font-size: 1.1rem; color: var(--text-dark);">Saved Wallets</span></div>
+                <div class="stat-subtext">Active User: <strong id="overview-username-display">-</strong></div>
+              </div>
+              <div style="margin-top: 18px; display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted);">
+                <span>Execution: <strong style="color: var(--primary-blue);">100% Client-Side In Browser</strong></span>
+                <span>Network Requests: <strong style="color: var(--accent-green);">0 Packets</strong></span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div>
+                <div class="stat-card-header">
+                  <span class="stat-label">SUPPORTED ECOSYSTEM</span>
+                  <span class="badge-live-green"><i class="fa-solid fa-shield-check"></i> PayCow Core</span>
+                </div>
+                <div class="stat-value dark-val">32+ <span style="font-size: 1.1rem; color: var(--text-muted);">Blockchains</span></div>
+                <div class="stat-subtext">EVM, Bitcoin & UTXO, Solana, Cosmos, Privacy, Move & L1s</div>
+              </div>
+              <div style="margin-top: 18px;">
+                <button class="btn-pill-dark" id="btn-overview-launch-studio" style="font-size: 0.85rem; padding: 8px 18px;">
+                  Launch Generator Studio <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-card" style="margin-top: 24px;">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-list-check" style="font-size: 1.4rem; color: var(--text-dark);"></i>
+                <div>
+                  <h2 class="card-title">Saved Address Ledger</h2>
+                  <p class="card-subtitle">Public addresses saved in your account ledger.</p>
+                </div>
+              </div>
+              <button class="btn-pill-white" id="btn-refresh-overview-history"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+            </div>
+
+            <div class="paycow-table-wrapper">
+              <table class="paycow-table">
+                <thead>
+                  <tr>
+                    <th>REFERENCE</th>
+                    <th>NETWORK</th>
+                    <th>PUBLIC ADDRESS / LABEL</th>
+                    <th>STATUS</th>
+                    <th>TIMESTAMP</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-history-tbody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-generator" class="dash-tab-content" style="display: none;">
+          <div class="content-card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Multi-Chain Generator Studio</h2>
+                  <p class="card-subtitle">Select any supported blockchain network to generate a keypair in your browser.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="network-category-pills">
+              <button class="cat-pill-btn active" data-filter="all">All (32+)</button>
+              <button class="cat-pill-btn" data-filter="EVM">EVM Chains (16)</button>
+              <button class="cat-pill-btn" data-filter="UTXO">Bitcoin & UTXO (8)</button>
+              <button class="cat-pill-btn" data-filter="Major L1">Major L1 & Move</button>
+              <button class="cat-pill-btn" data-filter="Cosmos">Cosmos & IBC (5)</button>
+              <button class="cat-pill-btn" data-filter="Privacy">Privacy</button>
+            </div>
+
+            <div class="network-grid-selector" id="studio-network-grid">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Mnemonic Seed Length:</label>
+                <select class="form-select" id="studio-mnemonic-words">
+                  <option value="12" selected>12 Words (Standard - 128 Bit)</option>
+                  <option value="24">24 Words (High Entropy - 256 Bit)</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="studio-btc-type-group" style="display: none;">
+                <label class="form-label">Bitcoin Address Type:</label>
+                <select class="form-select" id="studio-btc-type">
+                  <option value="p2wpkh" selected>Native SegWit (bc1q...) - BIP84</option>
+                  <option value="p2tr">Taproot (bc1p...) - BIP86</option>
+                  <option value="p2pkh">Legacy (1...) - BIP44</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Wallet Label (Optional):</label>
+                <input type="text" class="form-input" id="studio-wallet-label" placeholder="e.g. Primary Payment Wallet">
+              </div>
+            </div>
+
+            <button class="btn-pill-blue" id="btn-studio-generate" style="width: 100%; justify-content: center; padding: 16px; font-size: 1.05rem;">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Wallet (Browser Local)
+            </button>
+
+            <div id="studio-result-box" style="display: none;" class="wallet-result-container">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span class="badge-live-blue" id="studio-res-network-name"><i class="fa-solid fa-circle-check"></i> Ethereum</span>
+                <span class="badge-live-green" id="studio-res-derivation">m/44'/60'/0'/0/0</span>
+              </div>
+
+              <div class="key-field-group">
+                <div class="key-field-label">
+                  <span>Public Address</span>
+                  <a href="#" target="_blank" id="studio-res-explorer" style="color: var(--primary-blue); text-decoration: none; font-size: 0.82rem;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Block Explorer</a>
+                </div>
+                <div class="key-field-box">
+                  <span class="key-value-text" id="studio-res-address">0x...</span>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn-icon-action btn-copy" data-target="studio-res-address"><i class="fa-regular fa-copy"></i> Copy</button>
+                    <button class="btn-icon-action" id="btn-studio-qr"><i class="fa-solid fa-qrcode"></i> QR</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="key-field-group">
+                <div class="key-field-label">
+                  <span style="color: #b91c1c; font-weight: 800;"><i class="fa-solid fa-key"></i> Private Key</span>
+                  <button class="btn-icon-action btn-toggle-mask" data-target="studio-res-privkey" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> Reveal / Hide</button>
+                </div>
+                <div class="key-field-box">
+                  <span class="key-value-text masked" id="studio-res-privkey">••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••</span>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn-icon-action btn-copy" data-target="studio-res-privkey"><i class="fa-regular fa-copy"></i> Copy</button>
+                    <button class="btn-icon-action" id="btn-studio-priv-qr"><i class="fa-solid fa-qrcode"></i> QR</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="key-field-group" id="studio-res-wif-group" style="display: none;">
+                <div class="key-field-label">
+                  <span style="color: #b91c1c;" id="studio-res-wif-label">WIF / Secret Seed Format</span>
+                </div>
+                <div class="key-field-box">
+                  <span class="key-value-text masked" id="studio-res-wif">••••••••••••••••••••••••••••••••••••••••</span>
+                  <button class="btn-icon-action btn-copy" data-target="studio-res-wif"><i class="fa-regular fa-copy"></i> Copy</button>
+                </div>
+              </div>
+
+              <div class="key-field-group">
+                <div class="key-field-label">
+                  <span>Mnemonic Seed Phrase</span>
+                  <button class="btn-icon-action btn-toggle-mask" data-target="studio-res-mnemonic" style="font-size: 0.75rem;"><i class="fa-solid fa-eye"></i> Reveal / Hide</button>
+                </div>
+                <div class="key-field-box">
+                  <span class="key-value-text masked" id="studio-res-mnemonic">•••• •••• •••• •••• •••• •••• •••• •••• •••• •••• •••• ••••</span>
+                  <button class="btn-icon-action btn-copy" data-target="studio-res-mnemonic"><i class="fa-regular fa-copy"></i> Copy</button>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn-pill-white" id="btn-studio-download-json"><i class="fa-solid fa-file-code"></i> Download JSON</button>
+                <button class="btn-pill-white" id="btn-studio-download-txt"><i class="fa-solid fa-file-lines"></i> Download TXT</button>
+                <button class="btn-pill-dark" id="btn-studio-save-history"><i class="fa-solid fa-bookmark"></i> Save Public Address</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="tab-bulk" class="dash-tab-content" style="display: none;">
+          <div class="content-card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-layer-group" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Bulk Wallet Generator (Browser Local)</h2>
+                  <p class="card-subtitle">Generate 1 to 100 wallets simultaneously and export to CSV or JSON with 0 server requests.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Network Selection:</label>
+                <select class="form-select" id="bulk-network-select">
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Quantity:</label>
+                <select class="form-select" id="bulk-count-select">
+                  <option value="5">5 Wallets</option>
+                  <option value="10" selected>10 Wallets</option>
+                  <option value="25">25 Wallets</option>
+                  <option value="50">50 Wallets</option>
+                  <option value="100">100 Wallets</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-pill-blue" id="btn-generate-bulk" style="padding: 14px 28px;">
+              <i class="fa-solid fa-bolt"></i> Generate Bulk Wallets
+            </button>
+
+            <div id="bulk-results-container" style="display: none; margin-top: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 1.1rem; font-weight: 800;" id="bulk-results-title">Generated Wallets</h3>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn-pill-white" id="btn-download-bulk-csv"><i class="fa-solid fa-file-csv"></i> Download CSV</button>
+                  <button class="btn-pill-white" id="btn-download-bulk-json"><i class="fa-solid fa-file-code"></i> Download JSON</button>
+                </div>
+              </div>
+
+              <div class="paycow-table-wrapper">
+                <table class="paycow-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>PUBLIC ADDRESS</th>
+                      <th>PRIVATE KEY</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bulk-results-tbody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="tab-master-seed" class="dash-tab-content" style="display: none;">
+          <div class="content-card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-key" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Universal Multi-Chain Master Seed (Browser Local)</h2>
+                  <p class="card-subtitle">Generate a single 12 or 24-word BIP39 seed phrase to derive synchronized addresses across major blockchains.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 24px; flex-wrap: wrap;">
+              <select class="form-select" id="master-seed-length" style="max-width: 260px;">
+                <option value="12" selected>12 Words (Standard)</option>
+                <option value="24">24 Words (High Entropy)</option>
+              </select>
+              <button class="btn-pill-blue" id="btn-generate-master-seed">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Master Seed
+              </button>
+            </div>
+
+            <div id="master-seed-result-container" style="display: none;">
+              <div style="background: #ffffff; border: 2px dashed var(--primary-blue); border-radius: 1.25rem; padding: 24px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <span style="font-weight: 800; font-size: 0.9rem; color: var(--primary-blue); text-transform: uppercase;">
+                    <i class="fa-solid fa-lock"></i> Master Seed Phrase (BIP39)
+                  </span>
+                  <button class="btn-icon-action btn-copy" data-target="master-seed-words-text"><i class="fa-regular fa-copy"></i> Copy Words</button>
+                </div>
+                <div id="master-seed-words-text" style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--text-dark); background: #f8fafc; padding: 16px; border-radius: 10px; line-height: 1.8;">
+                </div>
+              </div>
+
+              <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; color: var(--text-dark);">Derived Blockchain Keypairs</h3>
+              <div id="master-chains-list" style="display: flex; flex-direction: column; gap: 14px;">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="tab-saved-wallets" class="dash-tab-content" style="display: none;">
+          <div class="content-card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-vault" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Saved Public Addresses</h2>
+                  <p class="card-subtitle">Public addresses saved in your account ledger.</p>
+                </div>
+              </div>
+              <button class="btn-pill-white" id="btn-reload-saved-wallets"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+            </div>
+
+            <div class="paycow-table-wrapper">
+              <table class="paycow-table">
+                <thead>
+                  <tr>
+                    <th>NETWORK</th>
+                    <th>LABEL</th>
+                    <th>PUBLIC ADDRESS</th>
+                    <th>DERIVATION PATH</th>
+                    <th>DATE</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="saved-wallets-tbody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-source-code" class="dash-tab-content" style="display: none;">
+          <div class="content-card" style="padding: 28px;">
+            <div class="card-header-row" style="margin-bottom: 20px;">
+              <div class="card-title-group">
+                <i class="fa-solid fa-folder-tree" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Open Source Repository & Verification Explorer</h2>
+                  <p class="card-subtitle">Explore repository files and test suite reports in a structured file manager.</p>
+                </div>
+              </div>
+              <button class="btn-pill-green" id="btn-run-live-tests">
+                <i class="fa-solid fa-play"></i> Run All 5 Verification Suites
+              </button>
+            </div>
+
+            <div class="explorer-layout">
+              <div class="explorer-tree-panel">
+                <div class="explorer-tree-title">
+                  <span><i class="fa-solid fa-folder-open"></i> EXPLORER</span>
+                  <span style="font-size: 0.65rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #94a3b8;">19 FILES</span>
+                </div>
+                <div id="explorer-tree-root"></div>
+              </div>
+
+              <div class="explorer-editor-panel">
+                <div class="editor-header-bar">
+                  <div class="editor-breadcrumb">
+                    <i class="fa-regular fa-file-code"></i>
+                    <span id="explorer-current-path">src/services/crypto/index.js</span>
+                    <span style="font-size: 0.72rem; background: #334155; color: #cbd5e1; padding: 2px 8px; border-radius: 9999px;" id="explorer-file-size">-</span>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn-icon-action btn-copy" data-target="explorer-code-content" style="background: #334155; color: #ffffff; border-color: #475569;">
+                      <i class="fa-regular fa-copy"></i> Copy File
+                    </button>
+                  </div>
+                </div>
+
+                <div class="code-view-container">
+                  <pre class="code-pre-block" id="explorer-code-content">Loading file content...</pre>
+                </div>
+
+                <div id="explorer-terminal-box" style="display: none;" class="terminal-drawer">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #94a3b8; font-weight: 700;">
+                    <span><i class="fa-solid fa-terminal"></i> LIVE TEST EXECUTION LOG</span>
+                    <button class="btn-icon-action" id="btn-close-terminal" style="background: transparent; border: none; color: #94a3b8; padding: 0; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+                  </div>
+                  <pre id="explorer-terminal-output"></pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="tab-account" class="dash-tab-content" style="display: none;">
+          <div class="content-card">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-user-gear" style="color: var(--primary-blue); font-size: 1.4rem;"></i>
+                <div>
+                  <h2 class="card-title">Account Settings</h2>
+                  <p class="card-subtitle">Your profile information and active session details.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 16px; max-width: 480px;">
+              <div class="form-group">
+                <label class="form-label">Username:</label>
+                <input type="text" class="form-input" id="acc-username" readonly>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address:</label>
+                <input type="text" class="form-input" id="acc-email" readonly>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Created:</label>
+                <input type="text" class="form-input" id="acc-created" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-legal-risk" class="dash-tab-content" style="display: none;">
+          <div class="content-card" style="margin-bottom: 24px;">
+            <div class="card-header-row">
+              <div class="card-title-group">
+                <i class="fa-solid fa-scale-balanced" style="color: var(--primary-blue); font-size: 1.6rem;"></i>
+                <div>
+                  <h2 class="card-title">Legal Disclaimer, Risk Disclosure & Privacy Governance Policy</h2>
+                  <p class="card-subtitle">Formal terms governing client-side cryptographic generation, risk assumption, and data processing practices.</p>
+                </div>
+              </div>
+              <span class="badge-live-blue"><i class="fa-solid fa-file-contract"></i> Binding Governance Document</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 28px; margin-top: 16px; color: var(--text-dark); line-height: 1.7; font-size: 0.92rem;">
+              
+              <div style="border-left: 3px solid var(--primary-blue); padding-left: 16px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Section 1. Nature of the Software & Non-Custodial Architecture</h3>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>1.1 Execution Environment:</strong> PayCow Tools operates strictly as a client-side cryptographic generation interface. All mathematical computations, including without limitation the generation of BIP-39 mnemonic entropy, hierarchical deterministic (HD) key derivation pursuant to BIP-32, BIP-44, BIP-84, BIP-86, SLIP-0010, and CIP-1852 standards, and the derivation of asymmetric public/private keypairs, execute entirely within the local runtime environment of the User's client device.
+                </p>
+                <p style="margin: 0;">
+                  <strong>1.2 Absolute Absence of Custody:</strong> At no point does PayCow, its operators, affiliates, or hosting infrastructure transmit, receive, intercept, escrow, log, or maintain custody of User private keys, seed phrases, extended keys, or decrypted credentials. The User acknowledges that PayCow is not a bank, broker, custodian, financial intermediary, or money services business (MSB), and possesses no technical capability to access User assets or reverse executed operations.
+                </p>
+              </div>
+
+              <div style="border-left: 3px solid #dc2626; padding-left: 16px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: #991b1b;">Section 2. Cryptographic Asset Risk Assumption & User Responsibility</h3>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>2.1 Irrevocability of Distributed Ledger Operations:</strong> Blockchain networks and distributed ledger transactions are immutable, decentralized, and irreversible. If a User misplaces, loses, forgets, or exposes a generated mnemonic seed phrase or private key, the cryptographic assets associated with the corresponding addresses become permanently irrecoverable. PayCow cannot reset credentials, decrypt stored data, regenerate unrecorded keys, or recover lost funds under any circumstances.
+                </p>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>2.2 Local Endpoint Security:</strong> The security of generated cryptographic material depends entirely upon the integrity of the User's local hardware, operating system, network connection, and browser environment. The User assumes sole and exclusive responsibility for protecting their endpoint against malware, keyloggers, malicious browser extensions, session hijacking, phishing attempts, unauthorized physical access, and clipboard manipulation.
+                </p>
+                <p style="margin: 0;">
+                  <strong>2.3 Heterogeneous Implementation Variance:</strong> Different third-party wallet providers, hardware devices, and node implementations may employ diverging address encoding schemes, derivation paths, or curve parameters. While PayCow strictly complies with standard specification vectors, the User is expressly advised to independently verify keypair compatibility and perform small-value test transactions prior to committing material financial value.
+                </p>
+              </div>
+
+              <div style="border-left: 3px solid var(--accent-green); padding-left: 16px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Section 3. Privacy Policy & Minimalist Data Governance</h3>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>3.1 Purpose of Account Registration:</strong> User authentication (email identifier and password hash) is enforced exclusively as a structural rate-limiting and anti-abuse control to mitigate automated distributed denial-of-service (DDoS) attacks, brute-force exploitation, and infrastructure saturation.
+                </p>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>3.2 Privacy-Preserving Practices:</strong> PayCow does not collect Know-Your-Customer (KYC) identity documentation, government identification, physical addresses, or financial telemetry. Users are fully entitled and permitted to utilize anonymous virtual private network (VPN) tunnels, proxy networks, and disposable/pseudonymous email addresses.
+                </p>
+                <p style="margin: 0;">
+                  <strong>3.3 Voluntary Ledger Records:</strong> If the User voluntarily elects to save a public address record via the interface, only the public address string, network identifier, derivation path string, and custom user-provided label are retained in the database. Private cryptographic secrets are rejected by server-side schema firewalls and are never accepted for persistence.
+                </p>
+              </div>
+
+              <div style="border-left: 3px solid #64748b; padding-left: 16px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Section 4. Disclaimer of Warranties</h3>
+                <p style="margin: 0 0 8px 0; font-size: 0.88rem; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-muted);">
+                  THE SOFTWARE, INTERFACES, SCRIPTS, AND DERIVATION ENGINES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+                </p>
+                <p style="margin: 0; font-size: 0.9rem;">
+                  PayCow does not warrant that the functions contained in the software will meet specific User requirements, that the operation of the software will be uninterrupted or error-free, or that cryptographic algorithms will remain immune from future computational or quantum-cryptanalytic vulnerabilities.
+                </p>
+              </div>
+
+              <div style="border-left: 3px solid #64748b; padding-left: 16px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Section 5. Limitation of Liability & Indemnification</h3>
+                <p style="margin: 0 0 8px 0;">
+                  <strong>5.1 Exclusion of Consequential Damages:</strong> In no event shall PayCow, its developers, contributors, or service providers be liable for any direct, indirect, incidental, special, exemplary, punitive, or consequential damages (including, but not limited to, loss of cryptographic assets, loss of profits, business interruption, corruption of data, or key compromise), however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software.
+                </p>
+                <p style="margin: 0;">
+                  <strong>5.2 Indemnification:</strong> By accessing and utilizing this software, the User agrees to indemnify, defend, and hold harmless PayCow and its maintainers from and against any claims, losses, liabilities, costs, or damages resulting from the User's breach of these terms, unauthorized local key handling, or violation of applicable regulatory frameworks within their jurisdiction.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-qr">
+    <div class="modal-box" style="text-align: center;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="qr-modal-title">QR Code</h2>
+        <button class="btn-close-modal" id="btn-close-qr-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <img id="qr-modal-img" src="" alt="QR Code" style="width: 220px; height: 220px; margin: 0 auto; display: block; border-radius: 12px; border: 1px solid var(--border-color); padding: 8px;">
+      <div id="qr-modal-text" style="font-family: var(--font-mono); font-size: 0.85rem; margin-top: 16px; word-break: break-all; color: var(--text-dark);"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/clientCrypto.js"></script>
+  <script src="/js/clientQr.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
